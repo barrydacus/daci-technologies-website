@@ -20,6 +20,7 @@
   .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; padding: 0.6rem 1.1rem; border-radius: 50px; border: 1px solid transparent; transition: color 0.2s, border-color 0.2s; display: block; }
   .nav-links a:hover { color: var(--text); border-color: var(--border); }
   #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 6% 6rem; position: relative; overflow: hidden; }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,229,196,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,196,0.035) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 0%, transparent 100%); }
   .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0,229,196,0.08); border: 1px solid var(--border-accent); color: var(--accent); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 2rem; }
   .hero-badge::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
@@ -28,7 +29,9 @@
   #hero p { font-size: clamp(1rem, 2vw, 1.15rem); color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; font-weight: 300; line-height: 1.85; }
   .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
   .btn-primary { background: var(--accent); color: #0a0a0f; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2rem; border-radius: 50px; text-decoration: none; border: none; cursor: pointer; transition: transform 0.2s, opacity 0.2s; display: inline-block; }
+  .btn-primary:hover { transform: translateY(-2px); opacity: 0.88; }
   .btn-outline { background: transparent; color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.95rem; padding: 0.85rem 2rem; border-radius: 50px; text-decoration: none; border: 1px solid var(--border); cursor: pointer; transition: border-color 0.2s, transform 0.2s; display: inline-block; }
+  .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
   section { padding: 6rem 6%; }
   .section-tag { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display: block; }
   .section-title { font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1.1rem; }
@@ -48,13 +51,6 @@
   .daci-closing { font-size: 1rem; font-style: italic; font-weight: 300; color: var(--muted); line-height: 1.65; margin: 0; padding-top: 1.25rem; border-top: 0.5px solid var(--border); }
   #apps { background: var(--bg); }
   .apps-inner { max-width: 900px; margin: 0 auto; }
-  .app-card-main { background: var(--bg2); border: 1px solid rgba(0,229,196,0.2); border-radius: var(--radius); padding: 3rem; display: flex; align-items: center; gap: 3rem; margin-bottom: 1.5rem; transition: transform 0.3s; }
-  .app-emoji-big { font-size: 5rem; flex-shrink: 0; width: 120px; height: 120px; background: rgba(0,229,196,0.06); border: 1px solid var(--border-accent); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; }
-  .app-badge-live { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border-radius: 50px; background: rgba(0,229,196,0.1); color: var(--accent); border: 1px solid var(--border-accent); display: inline-block; margin-bottom: 0.75rem; }
-  .app-card-main h3 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; }
-  .app-card-main p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; max-width: 420px; }
-  .app-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
-  .tag { font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 50px; background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border); }
   .coming-soon-card { background: var(--bg2); border: 1px dashed var(--border); border-radius: var(--radius); padding: 2rem 2.5rem; text-align: center; }
   .coming-soon-card p { font-size: 0.95rem; color: var(--muted); font-weight: 300; }
   .coming-soon-card p strong { color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; display: block; font-size: 1rem; margin-bottom: 0.4rem; }
@@ -62,25 +58,31 @@
   .waitlist-inner { max-width: 540px; margin: 0 auto; }
   .waitlist-form { display: flex; gap: 0.75rem; margin-top: 1.75rem; }
   .waitlist-form input { flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 50px; padding: 0.85rem 1.5rem; color: var(--text); font-family: 'Nunito', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
-  .waitlist-form button { background: var(--accent); color: #0a0a0f; border: none; border-radius: 50px; padding: 0.85rem 1.6rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; white-space: nowrap; }
+  .waitlist-form input:focus { border-color: var(--accent); }
+  .waitlist-form input::placeholder { color: var(--muted); }
+  .waitlist-form button { background: var(--accent); color: #0a0a0f; border: none; border-radius: 50px; padding: 0.85rem 1.6rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: transform 0.2s, opacity 0.2s; white-space: nowrap; }
+  .waitlist-form button:hover { transform: translateY(-2px); opacity: 0.88; }
   .waitlist-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.75rem; }
   .waitlist-success { display: none; background: rgba(0,229,196,0.08); border: 1px solid var(--border-accent); border-radius: var(--radius); padding: 1rem 1.5rem; color: var(--accent); font-size: 0.95rem; font-weight: 500; margin-top: 1rem; }
   #contact { background: var(--bg); }
   .contact-inner { max-width: 680px; margin: 0 auto; }
+  .contact-inner .section-sub { max-width: 100%; }
   .contact-note { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; font-size: 0.875rem; color: var(--muted); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
-  .contact-note span { color: var(--accent); }
+  .contact-note span { color: var(--accent); font-size: 1rem; }
   .contact-form { display: flex; flex-direction: column; gap: 1rem; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
   .form-group label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
   .form-group input, .form-group textarea { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1.1rem; color: var(--text); font-family: 'Nunito', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; resize: none; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
   footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2rem 6%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .footer-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.95rem; color: var(--text); text-decoration: none; }
+  .footer-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.95rem; letter-spacing: 0.04em; color: var(--text); text-decoration: none; }
   .footer-logo span { color: var(--accent); }
   footer p { font-size: 0.8rem; color: var(--muted); }
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
-  @media (max-width: 700px) { .daci-pillars { grid-template-columns: 1fr; } .app-card-main { flex-direction: column; gap: 1.5rem; padding: 2rem; } .form-row { grid-template-columns: 1fr; } .waitlist-form { flex-direction: column; } }
+  @media (max-width: 700px) { .daci-pillars { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } .waitlist-form { flex-direction: column; } nav { padding: 1rem 4%; } .nav-links a { padding: 0.55rem 0.75rem; font-size: 0.875rem; } }
 </style>
 </head>
 <body>
@@ -93,6 +95,7 @@
   </ul>
 </nav>
 <section id="hero">
+  <div class="hero-grid"></div>
   <div class="hero-badge">Building what's next</div>
   <h1>Apps that make<br><span>life simpler</span></h1>
   <p>DACI Technologies builds AI-powered mobile apps for everyday life.</p>
@@ -130,23 +133,9 @@
   <div class="apps-inner">
     <span class="section-tag fade-in">Our Apps</span>
     <h2 class="section-title fade-in">What we're building</h2>
-    <p class="section-sub fade-in">Our first app is aimed at making home cooking easier and more enjoyable for everyone.</p>
-    <div class="app-card-main fade-in">
-      <div class="app-emoji-big">&#128104;&#8205;&#127859;</div>
-      <div>
-        <span class="app-badge-live">Flagship App</span>
-        <h3>MySousChef</h3>
-        <p>Your AI-powered kitchen companion. MySousChef helps home cooks plan meals, scale recipes, swap ingredients, and cook with confidence.</p>
-        <div class="app-tags">
-          <span class="tag">Recipe scaling</span>
-          <span class="tag">Ingredient substitution</span>
-          <span class="tag">AI meal planning</span>
-          <span class="tag">iOS + Android</span>
-        </div>
-      </div>
-    </div>
-    <div class="coming-soon-card fade-in">
-      <p><strong>More apps coming soon.</strong> Join the waitlist below to be the first to know when our next product launches.</p>
+    <div class="coming-soon-card fade-in" style="padding: 4rem 2.5rem;">
+      <p style="font-size: 2.5rem; margin-bottom: 1.25rem;">&#127916;</p>
+      <p><strong>Stay tuned for coming attractions.</strong> We're working on something great. Join the waitlist below to be the first to know when we launch.</p>
     </div>
   </div>
 </section>
@@ -154,7 +143,7 @@
   <div class="waitlist-inner fade-in">
     <span class="section-tag">Stay in the loop</span>
     <h2 class="section-title">Be first to know</h2>
-    <p class="section-sub">Sign up for early access to MySousChef and updates on what we're building next.</p>
+    <p class="section-sub">Sign up to be the first to know when we launch.</p>
     <div class="waitlist-form">
       <input type="email" id="waitlist-email" placeholder="your@email.com" />
       <button onclick="handleWaitlist()">Join</button>
@@ -191,4 +180,4 @@
   function handleContact(e) { e.preventDefault(); const btn=e.target.querySelector('button[type=submit]'); btn.textContent='Message sent!'; btn.style.background='rgba(0,229,196,0.12)'; btn.style.color='var(--accent)'; setTimeout(()=>{btn.textContent='Send Message';btn.style.background='';btn.style.color='';e.target.reset();},3000); }
 </script>
 </body>
-</html>
+</html>.
